@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=\, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <div class="post-section">
+        <h1>{{.Post.Title}}</h1>
+        <p>{{.Post.Content}}</p>
+        <p>Categories: {{range $index, $cat := .Post.Cats}}{{if $index}}, {{end}}{{.Name}}{{end}}</p>
+    </div>
+
+    <div class="reaction-section">
+        <h4>Likes : {{.LikesCount}} || Dislikes : {{ .DislikesCount}}</h4>
+        <div class="reaction-section">
+            <form action="/reactPost" method="POST">
+                <input type="hidden" name="postID" value="{{.Post.Id}}">
+                <input type="hidden" name="sign" value="1">
+                <button type="submit">Like</button>
+            </form>
+            <form action="/reactPost" method="POST">
+                <input type="hidden" name="postID" value="{{.Post.Id}}">
+                <input type="hidden" name="sign" value="-1">
+                <button type="submit">Dislike</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="comment-section">
+        <h2>Comments</h2>
+        {{if .Auth}}
+        <form action="/submitComment" method="POST">
+            <input type="hidden" name="postID" value="{{.Post.Id}}">
+            <textarea name="content" id="content" cols="30" rows="10"></textarea>
+            <br>
+            <button type="submit">Create Comment</button>
+        </form>
+        {{else}}
+        <p>You must be logged in to create comment</p>
+        {{end}}
+
+        {{if .Comments}}
+        {{range .Comments}}
+        <div class="comment-container">
+            <p>{{.Content}}</p>
+            <p>Author: {{.Author}}</p>
+            <div class="comment-reaction">
+                <h4>Likes : {{.LikesCount}} || Dislikes : {{ .DislikesCount}}</h4>
+                <div class="reaction-section">
+                    <form action="/reactComment" method="POST">
+                        <input type="hidden" name="postID" value="{{$.Post.Id}}">
+                        <input type="hidden" name="commentID" value="{{.ID}}">
+                        <input type="hidden" name="sign" value="1">
+                        <button type="submit">Like</button>
+                    </form>
+                    <form action="/reactComment" method="POST">
+                        <input type="hidden" name="postID" value="{{$.Post.Id}}">
+                        <input type="hidden" name="sign" value="-1">
+                        <input type="hidden" name="commentID" value="{{.ID}}">
+                        <button type="submit">Dislike</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+        {{end}}
+        {{else}}
+        {{if .Auth}}
+        <p>Be the first who will create comment</p>
+        {{end}}
+        {{end}}
+    </div>
+</body>
+
+</html>

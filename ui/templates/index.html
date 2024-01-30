@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ALL POSTS - FORUM</title>
+</head>
+
+<body>
+    {{if .Auth}}
+    <p>Welcomee {{ .Username}}</p>
+    <a href="/logout">Logout</a>
+
+
+
+    <div class="filters">
+
+        <form action="/filter" method="POST">
+            <label for="category">Category filter</label>
+            {{range .Cats}}
+            <input type="checkbox" name="category" id="category{{.ID}}" value="{{.ID}}">
+            <label for="category{{.ID}}">{{.Name}}</label>
+            {{end}}
+            <input type="submit" value="Filter">
+        </form>
+
+    </div>
+    {{else}}
+    <a href="/login">Login</a>
+    {{end}}
+
+    <div class="posts-container">
+        {{if .Posts}}
+        {{range .Posts}}
+        <a href="/post/{{.Id}}">
+            <div class="post-container">
+                <h2>Title: {{.Title}}</h2>
+                <p>Categories: {{range $index, $cat := .Cats}}{{if $index}}, {{end}}{{.Name}}{{end}}</p>
+            </div>
+        </a>
+        {{end}}
+        {{else}}
+        <p>Be the first who will create post</p>
+        {{end}}
+    </div>
+
+</body>
+
+</html>
