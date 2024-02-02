@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+<body>
+    <h1>Create a Post</h1>
+
+    <form action="/createPost" method="POST">
+        <label for="title">Title:</label>
+        <input type="text" id="title" name="title" required>
+
+        <label for="content">Content:</label>
+        <textarea id="content" name="content" required></textarea>
+        <br>
+        <label for="category">Category:</label>
+        <br>
+        {{range .}}
+            <input type="checkbox" id="{{.ID}}" name="cats" value="{{.ID}}">
+            <label for="{{.ID}}">{{.Name}}</label><br>
+        {{end}}
+
+        <button type="submit">Create Post</button>
+    </form>
+</body>
+</body>
+</html>

@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html class="index_html" lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="/style/style.css">
+    <title>ALL POSTS - FORUM</title>
+</head>
+
+<body class="index_body">
+    <main class="taller">
+        <section class="top">
+            {{if .Auth}}
+            <p>Welcomee {{ .Username}}</p>
+            <a href="/logout">Logout</a>
+            <div class="filters">
+
+                <form action="/filter" method="POST">
+                    <label for="category">Category filter</label>
+                    {{range .Cats}}
+                    <input type="checkbox" name="category" id="category{{.ID}}" value="{{.ID}}">
+                    <label for="category{{.ID}}">{{.Name}}</label>
+                    {{end}}
+                    <input type="submit" value="Filter">
+                </form>
+                {{else}}
+                <div class="form_login">
+                    <form action="/login" method="get">
+                        <button class="login-button" type="submit">Login</button>
+                    </form>
+                </div>
+                {{end}}
+            </div>
+        </section>
+        <section class="bot">
+            <div class="posts-container">
+                {{if .Posts}}
+                {{range .Posts}}
+                <div class="post-container">
+                    <a href="/post/{{.Id}}">
+                        <img src="https://groupietrackers.herokuapp.com/api/images/soja.jpeg" alt="">
+                    </a>
+                    <a href="/post/{{.Id}}">
+                        <h2>Title: {{.Title}}</h2>
+                    </a>
+                    <p>Categories: {{range $index, $cat := .Cats}}{{if $index}}, {{end}}{{.Name}}{{end}}</p>
+                </div>
+                {{end}}
+                {{else}}
+            </div>
+            <p>Be the first who will create post</p>
+            {{end}}
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
