@@ -21,7 +21,7 @@ type Application struct {
 type Config struct { // Add configuration fields here
 }
 
-// NewApplication initializes a new Application struct
+// NewApplication initializes a new Application struct.
 func NewApplication(config *Config) *Application {
 	// Initialize services
 	db, err := sql.Open("sqlite3", "forum.sqlite")
