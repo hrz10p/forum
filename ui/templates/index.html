@@ -22,8 +22,7 @@
     <main class="taller">
         <section class="top">
             <div class="filters">
-
-                <form action="/filter" method="POST">
+                <form class="filter" action="/filter" method="POST">
                     <label for="category">Category filter</label>
                     {{range .Cats}}
                     <input type="checkbox" name="category" id="category{{.ID}}" value="{{.ID}}">
@@ -32,11 +31,13 @@
                     <input type="submit" value="Filter">
                 </form>
                 {{else}}
-                <div class="form_login">
-                    <form action="/login" method="get">
-                        <button class="login-button" type="submit">Login</button>
-                    </form>
-                </div>
+                <header>
+                    <div class="form_login">
+                        <form action="/login" method="get">
+                            <button class="login-button" type="submit">Login</button>
+                        </form>
+                    </div>
+                </header>
                 {{end}}
             </div>
         </section>
