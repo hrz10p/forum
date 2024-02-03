@@ -10,11 +10,17 @@
 </head>
 
 <body class="index_body">
+    {{if .Auth}}
+    <!-- <p>Welcomee {{ .Username}}</p> -->
+    <header>
+        <div class="form_login">
+            <form action="/logout" method="get">
+                <button class="login-button" type="submit">Logout</button>
+            </form>
+        </div>
+    </header>
     <main class="taller">
         <section class="top">
-            {{if .Auth}}
-            <p>Welcomee {{ .Username}}</p>
-            <a href="/logout">Logout</a>
             <div class="filters">
 
                 <form action="/filter" method="POST">
