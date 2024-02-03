@@ -46,13 +46,21 @@
                 {{if .Posts}}
                 {{range .Posts}}
                 <div class="post-container">
-                    <a href="/post/{{.Id}}">
+                    <a class="image_card" href="/post/{{.Id}}">
                         <img src="https://groupietrackers.herokuapp.com/api/images/soja.jpeg" alt="">
                     </a>
-                    <a href="/post/{{.Id}}">
-                        <h2>Title: {{.Title}}</h2>
-                    </a>
-                    <p>Categories: {{range $index, $cat := .Cats}}{{if $index}}, {{end}}{{.Name}}{{end}}</p>
+                    <div class="meta_data">
+                        <div class="meta_data_title">
+                            <a href="/post/{{.Id}}">
+                                <h2>{{.Title}}</h2>
+                            </a>
+                        </div>
+                        <div class="section">
+                            <span class="text_gray"> Categories: </span>
+                            <span class="categories"> {{range $index, $cat := .Cats}}{{if $index}},
+                                {{end}}{{.Name}}{{end}} </span>
+                        </div>
+                    </div>
                 </div>
                 {{end}}
                 {{else}}
