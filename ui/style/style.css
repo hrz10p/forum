@@ -47,7 +47,7 @@ header {
 }
 
 
-.top {
+/* .top {
     display: flex;
     -moz-box-pack: center;
     justify-content: center;
@@ -58,6 +58,43 @@ header {
     text-align: center;
     position: relative;
     background: rgb(24, 24, 24);
+} */
+.top {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction:column;
+    height: calc(27vh);
+    text-align: center;
+    position: relative;
+    background: rgb(39, 43, 51);
+}
+
+.filter {
+    margin-bottom: 10px;
+    display: flex;
+}
+
+.filter label {
+    margin-right: 5px;
+}
+
+.filter input[type="checkbox"] {
+    margin-right: 5px;
+}
+
+.filter input[type="submit"] {
+    overflow: hidden;
+    background-color: rgb(60, 62, 68);
+    color: #ffff00;
+    border-radius: 0.5rem;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
 .bot {
@@ -75,8 +112,16 @@ header {
     color: white;
 }
 
+/* .filters {
+    color: white;
+} */
 .filters {
     color: white;
+    /* Зелёная рамка */
+    padding: 15px;
+    border-radius: 10px;
+    background-color: rgba(76, 175, 80, 0.2);
+    /* Зелёный фон с прозрачностью */
 }
 
 .login-button {
