@@ -34,7 +34,7 @@ func (a *AuthHanlder) Login(w http.ResponseWriter, r *http.Request) {
 
 		err := r.ParseForm()
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			ErrorPage(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 
@@ -45,14 +45,14 @@ func (a *AuthHanlder) Login(w http.ResponseWriter, r *http.Request) {
 			file := "./ui/templates/login.html"
 			tmpl, err := template.ParseFiles(file)
 			if err != nil {
-				http.Error(w, "Error parsing templates", 500)
+				ErrorPage(w, "Error parsing templates", 500)
 				return
 			}
 			w.WriteHeader(400)
 			err = tmpl.Execute(w, "Invalid username or password")
 			if err != nil {
 				fmt.Print(err)
-				http.Error(w, "Error executing template", 500)
+				ErrorPage(w, "Error executing template", 500)
 				return
 			}
 			return
@@ -65,20 +65,20 @@ func (a *AuthHanlder) Login(w http.ResponseWriter, r *http.Request) {
 				file := "./ui/templates/login.html"
 				tmpl, err := template.ParseFiles(file)
 				if err != nil {
-					http.Error(w, "Error parsing templates", 500)
+					ErrorPage(w, "Error parsing templates", 500)
 					return
 				}
 				w.WriteHeader(400)
 				err = tmpl.Execute(w, "Invalid username or password")
 				if err != nil {
 					fmt.Print(err)
-					http.Error(w, "Error executing template", 500)
+					ErrorPage(w, "Error executing template", 500)
 					return
 				}
 				return
 
 			default:
-				http.Error(w, "UNKNOWN", http.StatusInternalServerError)
+				ErrorPage(w, "UNKNOWN", http.StatusInternalServerError)
 				return
 			}
 		}
@@ -88,7 +88,7 @@ func (a *AuthHanlder) Login(w http.ResponseWriter, r *http.Request) {
 		session, err := a.Service.SessionService.RegisterSession(user.ID, times)
 		if err != nil {
 			logger.GetLogger().Warn(err.Error())
-			http.Error(w, "ERROR CREATING SESSION", http.StatusInternalServerError)
+			ErrorPage(w, "ERROR CREATING SESSION", http.StatusInternalServerError)
 			return
 		}
 
@@ -100,18 +100,18 @@ func (a *AuthHanlder) Login(w http.ResponseWriter, r *http.Request) {
 		file := "./ui/templates/login.html"
 		tmpl, err := template.ParseFiles(file)
 		if err != nil {
-			http.Error(w, "Error parsing templates", 500)
+			ErrorPage(w, "Error parsing templates", 500)
 			return
 		}
 
 		err = tmpl.Execute(w, nil)
 		if err != nil {
 			fmt.Print(err)
-			http.Error(w, "Error executing template", 500)
+			ErrorPage(w, "Error executing template", 500)
 			return
 		}
 	} else {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		ErrorPage(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
 }
 
@@ -119,7 +119,7 @@ func (a *AuthHanlder) Registration(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		err := r.ParseForm()
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			ErrorPage(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 
@@ -150,14 +150,14 @@ func (a *AuthHanlder) Registration(w http.ResponseWriter, r *http.Request) {
 			file := "./ui/templates/reg.html"
 			tmpl, err := template.ParseFiles(file)
 			if err != nil {
-				http.Error(w, "Error parsing templates", 500)
+				ErrorPage(w, "Error parsing templates", 500)
 				return
 			}
 			w.WriteHeader(400)
 			err = tmpl.Execute(w, errorMessages)
 			if err != nil {
 				fmt.Print(err)
-				http.Error(w, "Error executing template", 500)
+				ErrorPage(w, "Error executing template", 500)
 				return
 			}
 			return
@@ -174,7 +174,7 @@ func (a *AuthHanlder) Registration(w http.ResponseWriter, r *http.Request) {
 				errorMessages.EmailError = "Email exists"
 				break
 			default:
-				http.Error(w, "UNKNOWN ERROR", http.StatusInternalServerError)
+				ErrorPage(w, "UNKNOWN ERROR", http.StatusInternalServerError)
 				logger.GetLogger().Error(err.Error())
 				return
 
@@ -182,14 +182,14 @@ func (a *AuthHanlder) Registration(w http.ResponseWriter, r *http.Request) {
 			file := "./ui/templates/reg.html"
 			tmpl, err := template.ParseFiles(file)
 			if err != nil {
-				http.Error(w, "Error parsing templates", 500)
+				ErrorPage(w, "Error parsing templates", 500)
 				return
 			}
 			w.WriteHeader(400)
 			err = tmpl.Execute(w, errorMessages)
 			if err != nil {
 				fmt.Print(err)
-				http.Error(w, "Error executing template", 500)
+				ErrorPage(w, "Error executing template", 500)
 				return
 			}
 			return
@@ -200,18 +200,18 @@ func (a *AuthHanlder) Registration(w http.ResponseWriter, r *http.Request) {
 		file := "./ui/templates/reg.html"
 		tmpl, err := template.ParseFiles(file)
 		if err != nil {
-			http.Error(w, "Error parsing templates", 500)
+			ErrorPage(w, "Error parsing templates", 500)
 			return
 		}
 
 		err = tmpl.Execute(w, nil)
 		if err != nil {
 			fmt.Print(err)
-			http.Error(w, "Error executing template", 500)
+			ErrorPage(w, "Error executing template", 500)
 			return
 		}
 	} else {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		ErrorPage(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 }
@@ -221,7 +221,7 @@ func (a *AuthHanlder) Logout(w http.ResponseWriter, r *http.Request) {
 	cookie, err := cookies.GetCookie(r)
 	if err != nil {
 		logger.GetLogger().Error(err.Error())
-		http.Error(w, "Failed to get cookie", http.StatusInternalServerError)
+		ErrorPage(w, "Failed to get cookie", http.StatusInternalServerError)
 		return
 	}
 
@@ -229,7 +229,7 @@ func (a *AuthHanlder) Logout(w http.ResponseWriter, r *http.Request) {
 	err = a.Service.SessionService.DeleteSessionByID(cookie.Value)
 	if err != nil {
 		logger.GetLogger().Error("Failed to delete session in the database:")
-		http.Error(w, "Failed to delete session in the database", http.StatusInternalServerError)
+		ErrorPage(w, "Failed to delete session in the database", http.StatusInternalServerError)
 		return
 	}
 

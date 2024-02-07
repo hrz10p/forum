@@ -20,26 +20,26 @@ func NewReactionHandler(Service *services.Service) *ReactionHandler {
 
 func (h *ReactionHandler) ReactPost(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		ErrorPage(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
 	err := r.ParseForm()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		ErrorPage(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	user := getUserFromContext(r)
 	if (user == models.User{}) {
-		http.Error(w, "cant find a user :(", http.StatusBadRequest)
+		ErrorPage(w, "cant find a user :(", http.StatusBadRequest)
 		return
 	}
 	postID := r.FormValue("postID")
 	postint, err := strconv.Atoi(postID)
 	if err != nil {
 		logger.GetLogger().Error(err.Error())
-		http.Error(w, "postID not correct", http.StatusBadRequest)
+		ErrorPage(w, "postID not correct", http.StatusBadRequest)
 		return
 	}
 
@@ -47,13 +47,13 @@ func (h *ReactionHandler) ReactPost(w http.ResponseWriter, r *http.Request) {
 
 	signint, err := strconv.Atoi(sign)
 	if err != nil {
-		http.Error(w, "sign convert error", http.StatusInternalServerError)
+		ErrorPage(w, "sign convert error", http.StatusInternalServerError)
 		return
 	}
 
 	_, err = h.Service.PostService.GetPostByID(postint)
 	if err != nil {
-		http.Error(w, "Post not found", http.StatusBadRequest)
+		ErrorPage(w, "Post not found", http.StatusBadRequest)
 		return
 	}
 
@@ -62,9 +62,9 @@ func (h *ReactionHandler) ReactPost(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		switch err {
 		case models.SignIsMismatch:
-			http.Error(w, "Sign not correct", http.StatusBadRequest)
+			ErrorPage(w, "Sign not correct", http.StatusBadRequest)
 		default:
-			http.Error(w, "Cant react", http.StatusInternalServerError)
+			ErrorPage(w, "Cant react", http.StatusInternalServerError)
 		}
 		return
 	}
@@ -75,32 +75,32 @@ func (h *ReactionHandler) ReactPost(w http.ResponseWriter, r *http.Request) {
 
 func (h *ReactionHandler) ReactComment(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		ErrorPage(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
 	err := r.ParseForm()
 	if err != nil {
-		http.Error(w, err.Error(), http.StatusInternalServerError)
+		ErrorPage(w, err.Error(), http.StatusInternalServerError)
 		return
 	}
 
 	user := getUserFromContext(r)
 	if (user == models.User{}) {
-		http.Error(w, "cant find a user :(", http.StatusBadRequest)
+		ErrorPage(w, "cant find a user :(", http.StatusBadRequest)
 		return
 	}
 	postID := r.FormValue("postID")
 	postint, err := strconv.Atoi(postID)
 	if err != nil {
-		http.Error(w, "postID not correct", http.StatusBadRequest)
+		ErrorPage(w, "postID not correct", http.StatusBadRequest)
 		return
 	}
 
 	commentID := r.FormValue("commentID")
 	comint, err := strconv.Atoi(commentID)
 	if err != nil {
-		http.Error(w, "commentID not correct", http.StatusBadRequest)
+		ErrorPage(w, "commentID not correct", http.StatusBadRequest)
 		return
 	}
 
@@ -108,13 +108,13 @@ func (h *ReactionHandler) ReactComment(w http.ResponseWriter, r *http.Request) {
 
 	signint, err := strconv.Atoi(sign)
 	if err != nil {
-		http.Error(w, "sign convert error", http.StatusInternalServerError)
+		ErrorPage(w, "sign convert error", http.StatusInternalServerError)
 		return
 	}
 
 	_, err = h.Service.PostService.GetPostByID(postint)
 	if err != nil {
-		http.Error(w, "Post not found", http.StatusBadRequest)
+		ErrorPage(w, "Post not found", http.StatusBadRequest)
 		return
 	}
 
@@ -123,9 +123,9 @@ func (h *ReactionHandler) ReactComment(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		switch err {
 		case models.SignIsMismatch:
-			http.Error(w, "Sign not correct", http.StatusBadRequest)
+			ErrorPage(w, "Sign not correct", http.StatusBadRequest)
 		default:
-			http.Error(w, "Cant react", http.StatusInternalServerError)
+			ErrorPage(w, "Cant react", http.StatusInternalServerError)
 		}
 		return
 	}

@@ -108,13 +108,13 @@ func NewPostHandler(Service *services.Service) *PostHanlder {
 
 func (p *PostHanlder) Index(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
-		http.Error(w, "Not found", 404)
+		ErrorPage(w, "Not found", 404)
 		return
 	}
 	file := "./ui/templates/index.html"
 	tmpl, err := template.ParseFiles(file)
 	if err != nil {
-		http.Error(w, "Error parsing templates", 500)
+		ErrorPage(w, "Error parsing templates", 500)
 		return
 	}
 
@@ -122,19 +122,19 @@ func (p *PostHanlder) Index(w http.ResponseWriter, r *http.Request) {
 
 	posts, err := p.Service.PostService.GetAllPosts()
 	if err != nil {
-		http.Error(w, "Cant fecth posts", http.StatusInternalServerError)
+		ErrorPage(w, "Cant fecth posts", http.StatusInternalServerError)
 		return
 	}
 
 	views, err := p.converterPOSTS(posts)
 	if err != nil {
-		http.Error(w, "Cant load views", http.StatusInternalServerError)
+		ErrorPage(w, "Cant load views", http.StatusInternalServerError)
 		return
 	}
 
 	cats, err := p.Service.PostService.GetCats()
 	if err != nil {
-		http.Error(w, "Cant fecth cats", http.StatusInternalServerError)
+		ErrorPage(w, "Cant fecth cats", http.StatusInternalServerError)
 		return
 	}
 
@@ -153,7 +153,7 @@ func (p *PostHanlder) Index(w http.ResponseWriter, r *http.Request) {
 	err = tmpl.Execute(w, data)
 	if err != nil {
 		logger.GetLogger().Warn(err.Error())
-		http.Error(w, "Error executing template", 500)
+		ErrorPage(w, "Error executing template", 500)
 		return
 	}
 }
@@ -162,20 +162,20 @@ func (p *PostHanlder) CreatePost(w http.ResponseWriter, r *http.Request) {
 	if r.Method == http.MethodPost {
 		err := r.ParseForm()
 		if err != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			ErrorPage(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 
 		user := getUserFromContext(r)
 		if (user == models.User{}) {
-			http.Error(w, "cant find a user :(", http.StatusInternalServerError)
+			ErrorPage(w, "cant find a user :(", http.StatusInternalServerError)
 			return
 		}
 		content := r.FormValue("content")
 		title := r.FormValue("title")
 		cats := r.Form["cats"]
 		if cats == nil {
-			http.Error(w, "No cats selected", http.StatusBadRequest)
+			ErrorPage(w, "No cats selected", http.StatusBadRequest)
 			return
 		}
 		fmt.Println(content, cats)
@@ -186,7 +186,7 @@ func (p *PostHanlder) CreatePost(w http.ResponseWriter, r *http.Request) {
 			Title:   title,
 			Content: content,
 		}, catIds) != nil {
-			http.Error(w, err.Error(), http.StatusInternalServerError)
+			ErrorPage(w, err.Error(), http.StatusInternalServerError)
 			return
 		}
 
@@ -196,88 +196,88 @@ func (p *PostHanlder) CreatePost(w http.ResponseWriter, r *http.Request) {
 		file := "./ui/templates/postCreate.html"
 		tmpl, err := template.ParseFiles(file)
 		if err != nil {
-			http.Error(w, "Error parsing templates", 500)
+			ErrorPage(w, "Error parsing templates", 500)
 			return
 		}
 		cats, err := p.Service.PostService.GetCats()
 		if err != nil {
-			http.Error(w, "Error parsing cats", 500)
+			ErrorPage(w, "Error parsing cats", 500)
 			return
 		}
 		err = tmpl.Execute(w, cats)
 		if err != nil {
 			logger.GetLogger().Warn(err.Error())
-			http.Error(w, "Error executing template", 500)
+			ErrorPage(w, "Error executing template", 500)
 			return
 		}
 		return
 	} else {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		ErrorPage(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 }
 
 func (p *PostHanlder) Post(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		ErrorPage(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 
 	file := "./ui/templates/post.html"
 	tmpl, err := template.ParseFiles(file)
 	if err != nil {
-		http.Error(w, "Error parsing templates", 500)
+		ErrorPage(w, "Error parsing templates", 500)
 		return
 	}
 
 	user := getUserFromContext(r)
 
 	if !strings.HasPrefix(r.URL.Path, "/post/") {
-		http.Error(w, "Page not found", http.StatusNotFound)
+		ErrorPage(w, "Page not found", http.StatusNotFound)
 		return
 	}
 
 	pathID := r.URL.Path[len("/post/"):]
 	postID, err := strconv.Atoi(pathID)
 	if err != nil {
-		http.Error(w, "Page not found", http.StatusNotFound)
+		ErrorPage(w, "Page not found", http.StatusNotFound)
 		return
 	}
 	post, err := p.Service.PostService.GetPostByID(postID)
 	if err != nil {
 		switch err {
 		case models.NotFoundAnything:
-			http.Error(w, "Not found post", http.StatusNotFound)
+			ErrorPage(w, "Not found post", http.StatusNotFound)
 			break
 		default:
 			logger.GetLogger().Error(err.Error())
-			http.Error(w, "Post load problem", http.StatusInternalServerError)
+			ErrorPage(w, "Post load problem", http.StatusInternalServerError)
 		}
 		return
 	}
 
 	postview, err := p.convertPostToView(post)
 	if err != nil {
-		http.Error(w, "Error converting post", http.StatusInternalServerError)
+		ErrorPage(w, "Error converting post", http.StatusInternalServerError)
 		return
 	}
 
 	comments, err := p.Service.CommentService.GetCommentsByPostID(postID)
 	if err != nil {
-		http.Error(w, "Cant load comments", http.StatusInternalServerError)
+		ErrorPage(w, "Cant load comments", http.StatusInternalServerError)
 		return
 	}
 
 	comviews, err := p.convertCommentToView(comments)
 	if err != nil {
-		http.Error(w, "Error converting comments", http.StatusInternalServerError)
+		ErrorPage(w, "Error converting comments", http.StatusInternalServerError)
 		return
 	}
 
 	Likes, Dislikes, err := p.Service.ReactionService.GetReactionCountsForPost(postID)
 	if err != nil {
 		logger.GetLogger().Error(err.Error())
-		http.Error(w, "Error getting reaction counts", http.StatusInternalServerError)
+		ErrorPage(w, "Error getting reaction counts", http.StatusInternalServerError)
 		return
 	}
 
@@ -293,7 +293,7 @@ func (p *PostHanlder) Post(w http.ResponseWriter, r *http.Request) {
 		data.Auth = true
 		sign, err := p.Service.ReactionService.GetReactionSignForPost(user.ID, postID)
 		if err != nil {
-			http.Error(w, "Cant load reaction for post", http.StatusInternalServerError)
+			ErrorPage(w, "Cant load reaction for post", http.StatusInternalServerError)
 			return
 		}
 
@@ -309,7 +309,7 @@ func (p *PostHanlder) Post(w http.ResponseWriter, r *http.Request) {
 		for i, val := range data.Comments {
 			r, err := p.Service.ReactionService.GetReactionSignForComment(user.ID, val.ID)
 			if err != nil {
-				http.Error(w, "Cant load reactions for comments", http.StatusInternalServerError)
+				ErrorPage(w, "Cant load reactions for comments", http.StatusInternalServerError)
 				return
 			}
 			switch r {
@@ -327,26 +327,26 @@ func (p *PostHanlder) Post(w http.ResponseWriter, r *http.Request) {
 	err = tmpl.Execute(w, data)
 	if err != nil {
 		logger.GetLogger().Warn(err.Error())
-		http.Error(w, "Error executing template", 500)
+		ErrorPage(w, "Error executing template", 500)
 		return
 	}
 }
 
 func (p *PostHanlder) CatFilter(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodPost {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		ErrorPage(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 	file := "./ui/templates/index.html"
 	tmpl, err := template.ParseFiles(file)
 	if err != nil {
-		http.Error(w, "Error parsing templates", 500)
+		ErrorPage(w, "Error parsing templates", 500)
 		return
 	}
 
 	err = r.ParseForm()
 	if err != nil {
-		http.Error(w, "Error parsing form", http.StatusInternalServerError)
+		ErrorPage(w, "Error parsing form", http.StatusInternalServerError)
 		return
 	}
 
@@ -357,26 +357,26 @@ func (p *PostHanlder) CatFilter(w http.ResponseWriter, r *http.Request) {
 
 	user := getUserFromContext(r)
 	if err != nil {
-		http.Error(w, "Cant convert cats to int", http.StatusInternalServerError)
+		ErrorPage(w, "Cant convert cats to int", http.StatusInternalServerError)
 		return
 
 	}
 
 	posts, err := p.Service.PostService.GetPostsByCats(catsINTS)
 	if err != nil {
-		http.Error(w, "Cant fecth posts", http.StatusInternalServerError)
+		ErrorPage(w, "Cant fecth posts", http.StatusInternalServerError)
 		return
 	}
 
 	views, err := p.converterPOSTS(posts)
 	if err != nil {
-		http.Error(w, "Cant load views", http.StatusInternalServerError)
+		ErrorPage(w, "Cant load views", http.StatusInternalServerError)
 		return
 	}
 
 	cats, err := p.Service.PostService.GetCats()
 	if err != nil {
-		http.Error(w, "Cant fecth cats", http.StatusInternalServerError)
+		ErrorPage(w, "Cant fecth cats", http.StatusInternalServerError)
 		return
 	}
 
@@ -404,26 +404,26 @@ func (p *PostHanlder) CatFilter(w http.ResponseWriter, r *http.Request) {
 	err = tmpl.Execute(w, data)
 	if err != nil {
 		logger.GetLogger().Warn(err.Error())
-		http.Error(w, "Error executing template", 500)
+		ErrorPage(w, "Error executing template", 500)
 		return
 	}
 }
 
 func (p *PostHanlder) CreatedAndReacted(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
-		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		ErrorPage(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
 	}
 	file := "./ui/templates/index.html"
 	tmpl, err := template.ParseFiles(file)
 	if err != nil {
-		http.Error(w, "Error parsing templates", 500)
+		ErrorPage(w, "Error parsing templates", 500)
 		return
 	}
 
 	user := getUserFromContext(r)
 	if err != nil {
-		http.Error(w, "Cant convert cats to int", http.StatusInternalServerError)
+		ErrorPage(w, "Cant convert cats to int", http.StatusInternalServerError)
 		return
 	}
 
@@ -437,19 +437,19 @@ func (p *PostHanlder) CreatedAndReacted(w http.ResponseWriter, r *http.Request) 
 		}
 	}
 	if err != nil {
-		http.Error(w, "Cant fecth posts", http.StatusInternalServerError)
+		ErrorPage(w, "Cant fecth posts", http.StatusInternalServerError)
 		return
 	}
 
 	views, err := p.converterPOSTS(postsCreatedByUser)
 	if err != nil {
-		http.Error(w, "Cant load views", http.StatusInternalServerError)
+		ErrorPage(w, "Cant load views", http.StatusInternalServerError)
 		return
 	}
 
 	cats, err := p.Service.PostService.GetCats()
 	if err != nil {
-		http.Error(w, "Cant fecth cats", http.StatusInternalServerError)
+		ErrorPage(w, "Cant fecth cats", http.StatusInternalServerError)
 		return
 	}
 
@@ -468,7 +468,7 @@ func (p *PostHanlder) CreatedAndReacted(w http.ResponseWriter, r *http.Request) 
 	err = tmpl.Execute(w, data)
 	if err != nil {
 		logger.GetLogger().Warn(err.Error())
-		http.Error(w, "Error executing template", 500)
+		ErrorPage(w, "Error executing template", 500)
 		return
 	}
 }
