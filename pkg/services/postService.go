@@ -59,7 +59,7 @@ func (s *PostService) GetAllPosts() ([]models.PostWithCats, error) {
 }
 
 func (s *PostService) GetReactedPosts(UID string) ([]models.PostWithCats, error) {
-	rows, err := s.db.Query("SELECT p.id, p.title, p.content, p.uid FROM posts p JOIN post_reacts a ON p.id = a.pid WHERE a.uid = $1 AND a.sign IN (1, -1)", UID)
+	rows, err := s.db.Query("SELECT p.id, p.title, p.content, p.uid FROM posts p JOIN posts_reactions a ON p.id = a.post_id WHERE a.user_id = $1 AND a.sign IN (1, -1)", UID)
 	if err != nil {
 		switch err {
 		case sql.ErrNoRows:

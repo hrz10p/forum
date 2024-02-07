@@ -23,7 +23,8 @@ func (app *Application) InitializeRoutes() {
 	app.Router.Handle("/reactComment", middle.Authenticate(middle.LogRequest(middle.RecoverPanic(middle.SecureHeaders(middle.RequireAuthentication(http.HandlerFunc(reaction.ReactComment)))))))
 
 	app.Router.Handle("/catfiltered", middle.Authenticate(middle.LogRequest(middle.RecoverPanic(middle.SecureHeaders(http.HandlerFunc(post.CatFilter))))))
-	app.Router.Handle("/created", middle.Authenticate(middle.LogRequest(middle.RecoverPanic(middle.SecureHeaders(middle.RequireAuthentication(http.HandlerFunc(post.CreatedAndReacted)))))))
+	app.Router.Handle("/created", middle.Authenticate(middle.LogRequest(middle.RecoverPanic(middle.SecureHeaders(middle.RequireAuthentication(http.HandlerFunc(post.Created)))))))
+	app.Router.Handle("/reacted", middle.Authenticate(middle.LogRequest(middle.RecoverPanic(middle.SecureHeaders(middle.RequireAuthentication(http.HandlerFunc(post.Reacted)))))))
 
 	http.Handle("/ui/style/", http.StripPrefix("/ui/style", http.FileServer(http.Dir("./ui/style/"))))
 	app.Logger.Info("routs")

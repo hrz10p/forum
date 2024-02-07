@@ -409,7 +409,7 @@ func (p *PostHanlder) CatFilter(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-func (p *PostHanlder) CreatedAndReacted(w http.ResponseWriter, r *http.Request) {
+func (p *PostHanlder) Created(w http.ResponseWriter, r *http.Request) {
 	if r.Method != http.MethodGet {
 		ErrorPage(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -442,6 +442,64 @@ func (p *PostHanlder) CreatedAndReacted(w http.ResponseWriter, r *http.Request) 
 	}
 
 	views, err := p.converterPOSTS(postsCreatedByUser)
+	if err != nil {
+		ErrorPage(w, "Cant load views", http.StatusInternalServerError)
+		return
+	}
+
+	cats, err := p.Service.PostService.GetCats()
+	if err != nil {
+		ErrorPage(w, "Cant fecth cats", http.StatusInternalServerError)
+		return
+	}
+
+	catViews := p.catToViewConverter(cats)
+
+	data := page{
+		Posts: views,
+		Cats:  catViews,
+	}
+
+	if (user != models.User{}) {
+		data.Auth = true
+		data.Username = user.Username
+	}
+
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		logger.GetLogger().Warn(err.Error())
+		ErrorPage(w, "Error executing template", 500)
+		return
+	}
+}
+
+func (p *PostHanlder) Reacted(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		ErrorPage(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	file := "./ui/templates/index.html"
+	tmpl, err := template.ParseFiles(file)
+	if err != nil {
+		ErrorPage(w, "Error parsing templates", 500)
+		return
+	}
+
+	user := getUserFromContext(r)
+	if err != nil {
+		ErrorPage(w, "Cant convert cats to int", http.StatusInternalServerError)
+		return
+	}
+
+	posts, err := p.Service.PostService.GetReactedPosts(user.ID)
+
+	if err != nil {
+		logger.GetLogger().Error(err.Error())
+		ErrorPage(w, "Cant fecth posts", http.StatusInternalServerError)
+		return
+	}
+
+	views, err := p.converterPOSTS(posts)
 	if err != nil {
 		ErrorPage(w, "Cant load views", http.StatusInternalServerError)
 		return
