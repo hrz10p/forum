@@ -20,7 +20,7 @@ type PostHanlder struct {
 type page struct {
 	Auth     bool
 	Username string
-	Cats     []models.Category
+	Cats     []views.CategoryView
 	Posts    []views.PostView
 }
 
@@ -32,6 +32,14 @@ type showPost struct {
 	DislikesCount int
 	IsLiked       bool
 	IsDisliked    bool
+}
+
+func (p *PostHanlder) catToViewConverter(cats []models.Category) []views.CategoryView {
+	var viewss []views.CategoryView
+	for _, val := range cats {
+		viewss = append(viewss, views.CategoryView{ID: val.ID, Name: val.Name, Checked: false})
+	}
+	return viewss
 }
 
 func (p *PostHanlder) stringsToInts(str []string) ([]int, error) {
@@ -84,6 +92,7 @@ func (p *PostHanlder) converterPOSTS(posts []models.PostWithCats) ([]views.PostV
 	for _, val := range posts {
 		view, err := p.convertPostToView(val)
 		if err != nil {
+			logger.GetLogger().Error(err.Error())
 			return nil, err
 		}
 		views = append(views, view)
@@ -129,9 +138,11 @@ func (p *PostHanlder) Index(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
+	catViews := p.catToViewConverter(cats)
+
 	data := page{
 		Posts: views,
-		Cats:  cats,
+		Cats:  catViews,
 	}
 
 	if (user != models.User{}) {
@@ -307,6 +318,83 @@ func (p *PostHanlder) Post(w http.ResponseWriter, r *http.Request) {
 			}
 
 		}
+	}
+
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		logger.GetLogger().Warn(err.Error())
+		http.Error(w, "Error executing template", 500)
+		return
+	}
+}
+
+func (p *PostHanlder) CatFilter(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodPost {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	file := "./ui/templates/index.html"
+	tmpl, err := template.ParseFiles(file)
+	if err != nil {
+		http.Error(w, "Error parsing templates", 500)
+		return
+	}
+
+	err = r.ParseForm()
+	if err != nil {
+		http.Error(w, "Error parsing form", http.StatusInternalServerError)
+		return
+	}
+
+	catsFORM := r.Form["category"]
+
+	fmt.Println(catsFORM)
+	catsINTS, err := p.stringsToInts(catsFORM)
+
+	user := getUserFromContext(r)
+	if err != nil {
+		http.Error(w, "Cant convert cats to int", http.StatusInternalServerError)
+		return
+
+	}
+
+	posts, err := p.Service.PostService.GetPostsByCats(catsINTS)
+	if err != nil {
+		http.Error(w, "Cant fecth posts", http.StatusInternalServerError)
+		return
+	}
+
+	views, err := p.converterPOSTS(posts)
+	if err != nil {
+		http.Error(w, "Cant load views", http.StatusInternalServerError)
+		return
+	}
+
+	cats, err := p.Service.PostService.GetCats()
+	if err != nil {
+		http.Error(w, "Cant fecth cats", http.StatusInternalServerError)
+		return
+	}
+
+	catViews := p.catToViewConverter(cats)
+
+	for i, val := range catViews {
+		for _, val2 := range catsINTS {
+			if val.ID == val2 {
+				catViews[i].Checked = true
+			}
+		}
+
+	}
+
+	data := page{
+		Posts: views,
+		Cats:  catViews,
+	}
+
+	if (user != models.User{}) {
+		data.Auth = true
+		data.Username = user.Username
 	}
 
 	err = tmpl.Execute(w, data)

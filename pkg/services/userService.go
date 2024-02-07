@@ -2,6 +2,7 @@ package services
 
 import (
 	"database/sql"
+	"fmt"
 	"forum/pkg/models"
 
 	"github.com/google/uuid"
@@ -73,6 +74,7 @@ func (s *UserService) GetUserByID(id string) (models.User, error) {
 		&user.Password,
 		&user.Email)
 	if err != nil {
+		fmt.Println(err, id)
 		return models.User{}, err
 	}
 

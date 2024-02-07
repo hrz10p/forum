@@ -177,7 +177,7 @@ func (s *PostService) insertCatsForPost(postID int, catIDS []int) error {
 
 func (s *PostService) GetPostsByCats(catIDS []int) ([]models.PostWithCats, error) {
 	query := `
-		SELECT DISTINCT p.*
+		SELECT DISTINCT p.id, p.uid, p.title, p.content
 		FROM posts p
 		JOIN post_cats pc ON p.id = pc.post_id
 		WHERE pc.category_id IN (%s);
