@@ -174,6 +174,10 @@ func (p *PostHanlder) CreatePost(w http.ResponseWriter, r *http.Request) {
 		content := r.FormValue("content")
 		title := r.FormValue("title")
 		cats := r.Form["cats"]
+		if cats == nil {
+			http.Error(w, "No cats selected", http.StatusBadRequest)
+			return
+		}
 		fmt.Println(content, cats)
 		catIds, err := p.stringsToInts(cats)
 
@@ -386,6 +390,70 @@ func (p *PostHanlder) CatFilter(w http.ResponseWriter, r *http.Request) {
 		}
 
 	}
+
+	data := page{
+		Posts: views,
+		Cats:  catViews,
+	}
+
+	if (user != models.User{}) {
+		data.Auth = true
+		data.Username = user.Username
+	}
+
+	err = tmpl.Execute(w, data)
+	if err != nil {
+		logger.GetLogger().Warn(err.Error())
+		http.Error(w, "Error executing template", 500)
+		return
+	}
+}
+
+func (p *PostHanlder) CreatedAndReacted(w http.ResponseWriter, r *http.Request) {
+	if r.Method != http.MethodGet {
+		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		return
+	}
+	file := "./ui/templates/index.html"
+	tmpl, err := template.ParseFiles(file)
+	if err != nil {
+		http.Error(w, "Error parsing templates", 500)
+		return
+	}
+
+	user := getUserFromContext(r)
+	if err != nil {
+		http.Error(w, "Cant convert cats to int", http.StatusInternalServerError)
+		return
+	}
+
+	posts, err := p.Service.PostService.GetAllPosts()
+
+	var postsCreatedByUser []models.PostWithCats
+
+	for _, val := range posts {
+		if val.UID == user.ID {
+			postsCreatedByUser = append(postsCreatedByUser, val)
+		}
+	}
+	if err != nil {
+		http.Error(w, "Cant fecth posts", http.StatusInternalServerError)
+		return
+	}
+
+	views, err := p.converterPOSTS(postsCreatedByUser)
+	if err != nil {
+		http.Error(w, "Cant load views", http.StatusInternalServerError)
+		return
+	}
+
+	cats, err := p.Service.PostService.GetCats()
+	if err != nil {
+		http.Error(w, "Cant fecth cats", http.StatusInternalServerError)
+		return
+	}
+
+	catViews := p.catToViewConverter(cats)
 
 	data := page{
 		Posts: views,
