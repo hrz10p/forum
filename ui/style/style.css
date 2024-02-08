@@ -44,6 +44,7 @@ header {
 .taller {
     padding-top: 2px;
     display: block;
+    min-height: 70%;
 }
 
 
@@ -91,7 +92,8 @@ header {
     align-items: center;
     /* padding: 4.5rem 0px; */
     background: rgb(39, 43, 51);
-    min-height: calc(-60px + 50vh);
+    /* min-height: calc(-60px + 60vh); */
+    min-height: 60vh;
 }
 
 .index_body p {
