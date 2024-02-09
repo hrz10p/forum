@@ -75,8 +75,13 @@ header {
 } */
 .filters {
     position: sticky;
-top: 0;
+    top: 0;
+    color: white;
+    padding: 15px;
+    border-radius: 10px;
+    background-color: rgba(76, 175, 80, 0.2);
 }
+
 .filter {
     display: block;
     text-align: left;
@@ -104,6 +109,53 @@ top: 0;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
 }
 
+.clear_filter {
+    /* background-color: rgb(60, 62, 68); */
+    color: #ffff00;
+    border-style: hidden;
+    border-radius: 0.5rem;
+    padding: 8px 16px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+.create_and_react_filter {
+    width: 100%;
+    text-align: left;
+}
+.filter_created {
+    background-color: rgb(60, 62, 68);
+    
+    color: #ffff00;
+    border-style: hidden;
+    border-radius: 0.5rem;
+    padding: 8px 16px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
+.filter_reacted {
+    margin-top: 1%;
+    background-color: rgb(60, 62, 68);
+    color: #ffff00;
+    border-style: hidden;
+    border-radius: 0.5rem;
+    padding: 8px 16px;
+    text-align: left;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 14px;
+    cursor: pointer;
+    box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+}
+
 .bot {
     display: flex;
     -moz-box-pack: center;
@@ -121,17 +173,6 @@ top: 0;
     color: white;
 }
 
-/* .filters {
-    color: white;
-} */
-.filters {
-    color: white;
-    /* Зелёная рамка */
-    padding: 15px;
-    border-radius: 10px;
-    background-color: rgba(76, 175, 80, 0.2);
-    /* Зелёный фон с прозрачностью */
-}
 
 .login-button {
     margin-top: 10%;
