@@ -43,7 +43,7 @@ header {
 
 .taller {
     display: flex;
-    flex-direction: column;
+    /* flex-direction: column; */
     padding-top: 2px;
     /* display: block; */
     min-height: 70%;
@@ -55,13 +55,14 @@ header {
     -moz-box-pack: center;
     /* justify-content: center; */
     -moz-box-align: center;
+
     align-items: center;
     flex-direction: column;
     /* height: calc(27vh); */
     text-align: center;
     position: relative;
     background: rgb(39, 43, 51);
-    
+    width: 7%;
 }
 
 /* .top {
@@ -72,17 +73,23 @@ header {
     position: relative;
     background: rgb(39, 43, 51);
 } */
+.filters {
+    position: sticky;
+top: 0;
+}
 .filter {
     display: block;
     text-align: left;
     /* margin-left: 21%; */
 }
+
 .rowOfFilter {
     display: block;
     text-align: left;
     margin-bottom: 10px;
     /* padding-bottom: 4%; */
 }
+
 .filter input[type="submit"] {
     background-color: rgb(60, 62, 68);
     color: #ffff00;
@@ -107,6 +114,7 @@ header {
     background: rgb(39, 43, 51);
     /* min-height: calc(-60px + 60vh); */
     min-height: 60vh;
+    width: 93%;
 }
 
 .index_body p {
