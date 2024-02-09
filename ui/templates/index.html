@@ -18,6 +18,11 @@
                 <button class="login-button" type="submit">Logout</button>
             </form>
         </div>
+        <div class="form_login">
+            <form action="/createPost" method="get">
+                <button class="login-button" type="submit">Create Post</button>
+            </form>
+        </div>
     </header>
     {{else}}
     <header>
@@ -26,10 +31,16 @@
                 <button class="login-button" type="submit">Login</button>
             </form>
         </div>
+        <div class="form_login">
+            <form action="/createPost" method="get">
+                <button class="login-button" type="submit">Create Post</button>
+            </form>
+        </div>
     </header>
+    {{end}}
     <main class="taller">
         <section class="top">
-            {{end}}
+            
             <div class="filters">
                 <form class="filter" action="/catfiltered" method="POST">
                     <label for="category">Category filter</label>
@@ -38,11 +49,11 @@
                     <label for="category{{.ID}}">{{.Name}}</label>
                     {{end}}
                     <input type="submit" value="Filter">
+                    <a href="/">CLEAR</a>
                 </form>
-                <a href="/">CLEAR</a>
-
-                <a href="/created">Show created by me</a>
-                <a href="/reacted">Show reacted by me</a>
+                   
+                <a href="/created">created by me</a>
+                <a href="/reacted">reacted by me</a>
             </div>
         </section>
         <section class="bot">
@@ -69,7 +80,7 @@
                 {{end}}
                 {{else}}
             </div>
-            <p>Be the first who will create post</p>
+            <p>No posts found</p>
             {{end}}
             </div>
         </section>
