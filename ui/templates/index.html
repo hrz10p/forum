@@ -40,18 +40,23 @@
     {{end}}
     <main class="taller">
         <section class="top">
-            
+
             <div class="filters">
                 <form class="filter" action="/catfiltered" method="POST">
                     <label for="category">Category filter</label>
+                    <hr>
                     {{range .Cats}}
-                    <input type="checkbox" name="category" id="category{{.ID}}" value="{{.ID}}" {{if .Checked}} checked {{end}}>
-                    <label for="category{{.ID}}">{{.Name}}</label>
+                    <div class="rowOfFilter">
+                        <input type="checkbox" name="category" id="category{{.ID}}" value="{{.ID}}" {{if .Checked}}
+                            checked {{end}}>
+                        <label for="category{{.ID}}">{{.Name}}</label>
+                    </div>
                     {{end}}
+                    <hr>
                     <input type="submit" value="Filter">
                     <a href="/">CLEAR</a>
                 </form>
-                   
+
                 <a href="/created">created by me</a>
                 <a href="/reacted">reacted by me</a>
             </div>
@@ -62,7 +67,8 @@
                 {{range .Posts}}
                 <div class="post-container">
                     <a class="image_card" href="/post/{{.Id}}">
-                        <img src="https://media.istockphoto.com/id/1220827048/vector/anonymous-gender-neutral-face-avatar-incognito-head-silhouette.jpg?s=612x612&w=0&k=20&c=WUv9IHp5s5xY03UDkawu_xUrjmLFW0VMkwx3oAFl7QQ=" alt="">
+                        <img src="https://media.istockphoto.com/id/1220827048/vector/anonymous-gender-neutral-face-avatar-incognito-head-silhouette.jpg?s=612x612&w=0&k=20&c=WUv9IHp5s5xY03UDkawu_xUrjmLFW0VMkwx3oAFl7QQ="
+                            alt="">
                     </a>
                     <div class="meta_data">
                         <div class="meta_data_title">

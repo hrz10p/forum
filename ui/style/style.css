@@ -42,8 +42,10 @@ header {
 }
 
 .taller {
+    display: flex;
+    flex-direction: column;
     padding-top: 2px;
-    display: block;
+    /* display: block; */
     min-height: 70%;
 }
 
@@ -59,6 +61,7 @@ header {
     text-align: center;
     position: relative;
     background: rgb(39, 43, 51);
+    
 }
 
 /* .top {
@@ -69,7 +72,17 @@ header {
     position: relative;
     background: rgb(39, 43, 51);
 } */
-
+.filter {
+    display: block;
+    text-align: left;
+    /* margin-left: 21%; */
+}
+.rowOfFilter {
+    display: block;
+    text-align: left;
+    margin-bottom: 10px;
+    /* padding-bottom: 4%; */
+}
 .filter input[type="submit"] {
     background-color: rgb(60, 62, 68);
     color: #ffff00;
