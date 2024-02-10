@@ -62,7 +62,12 @@ header {
     /* display: block; */
     min-height: 70%;
 }
-
+.creation_taller {
+    display: flex;
+    /* flex-direction: column; */
+    padding-top: 2px;
+    justify-content: center;
+}
 
 .top {
     display: flex;
