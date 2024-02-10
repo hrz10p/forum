@@ -47,7 +47,8 @@
             {{if .Auth}}
             <form action="/submitComment" method="POST">
                 <input type="hidden" name="postID" value="{{.Post.Id}}">
-                <textarea name="content" id="content" cols="30" rows="10"></textarea>
+                <!-- <textarea name="content" id="content" cols="30" rows="10"></textarea> -->
+                <div id="content" dir="auto" class="content" aria-label="Enter comment" contenteditable="true"></div>
                 <br>
                 <button type="submit">Create Comment</button>
             </form>

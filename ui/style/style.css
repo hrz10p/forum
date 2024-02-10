@@ -668,6 +668,39 @@ header {
     flex-direction: column;
     /* padding-top: 2px; */
     /* display: block; */
-    height: calc(100vh - 2vh - 60px - 4vh);
+    min-height: calc(100vh - 2vh - 60px - 4vh);
     padding: 2vh;
+
+}
+
+/* .post_taller textarea {
+    background-color: transparent;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #948180;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #ffff00;
+    resize: none;
+} */
+.post-section {
+    align-items: center;
+    align-content: center;
+}
+.content {
+    outline: var(--yt-formatted-string-contenteditable-root-style-outline);
+    max-height: var(--yt-formatted-string-contenteditable-root-style-max-height);
+    overflow: var(--yt-formatted-string-contenteditable-root-style-overflow);
+    display: var(--yt-formatted-string-contenteditable-root-style-display, block);
+    overscroll-behavior: var(--yt-formatted-string-contenteditable-root-style-overscroll-behavior);
+    background-color: transparent;
+    box-sizing: border-box;
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #948180;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #ffff00;
+    width: 10%;
 }
