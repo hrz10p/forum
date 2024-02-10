@@ -187,7 +187,7 @@ func (p *PostHanlder) CreatePost(w http.ResponseWriter, r *http.Request) {
 			return
 		}
 
-		if validators.LengthRangeValidate(title, 5, 15) != nil {
+		if validators.LengthRangeValidate(title, 5, 24) != nil {
 			ErrorPage(w, "Title is to short or too long", 400)
 			return
 		}

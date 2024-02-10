@@ -71,7 +71,7 @@ header {
     display: flex;
     /* flex-direction: column; */
     justify-content: center;
-    height: 70%;
+    height: 56%;
     /* padding-right: 2%; */
 }
 
@@ -448,15 +448,27 @@ header {
     color: #ffff00;
     /* width: 300px; */
 }
+.creation_block .shadow-box {
+    height: 77%;
+    /* width: 300px; */
+}
 .creation_block input[type="text"],
 textarea {
     width: 100%;
-    padding: 8px;
-    margin-bottom: 10px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
     box-sizing: border-box;
+    background: rgb(60, 62, 68);
+    padding: 10px;
+    margin-bottom: 16px;
+    border: 1px solid #948180;
+    border-radius: 4px;
+    font-size: 16px;
+    color: #ffff00;
+    resize: none;
 }
+.creation_block textarea {
+    height: 79px;
+}
+
 .creation_layout {
     border-radius: 8px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
@@ -464,13 +476,37 @@ textarea {
     /* padding: 0%, 1%; */
     /* padding-left: 1%; */
     width: 40%;
-    height: 100%;
+    /* height: 100%; */
+    display: flex;
+    padding-bottom: 0.4%;
 }
 .shadow-box {
     background: rgb(60, 62, 68);
     border-radius: 8px;
     padding: 20px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.creation_button_block {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.creation_button {
+    padding: 10px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 5px;
+    background-color: #c6d310;;
+    color: white;
+    cursor: pointer;
+}
+
+.creation_button:hover {
+    background-color: #ffff00;
+    color: black;
+    box-shadow: 0 6px 12px 0 rgba(0, 0, 0, 0.2), 0 4px 8px 0 rgba(0, 0, 0, 0.1);
 }
 
 .title {
