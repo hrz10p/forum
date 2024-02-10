@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="/style/style.css">
+    <link rel="shortcut icon" href="/style/favicon.ico" type="image/x-icon">
     <title>ALL POSTS - FORUM</title>
 </head>
 
@@ -56,10 +57,12 @@
                     <input type="submit" value="Filter">
                     <a class="clear_filter" href="/">Clear</a>
                 </form>
+                {{if .Auth}}
                 <div class="create_and_react_filter">
                     <a class="filter_created" href="/created">created by me</a>
                     <a class="filter_reacted" href="/reacted">reacted by me</a>
                 </div>
+                {{end}}
             </div>
         </section>
         <section class="bot">

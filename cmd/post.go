@@ -10,6 +10,7 @@ import (
 	"forum/pkg/models"
 	"forum/pkg/services"
 	"forum/pkg/utils/logger"
+	"forum/pkg/utils/validators"
 	"forum/pkg/views"
 )
 
@@ -109,6 +110,7 @@ func NewPostHandler(Service *services.Service) *PostHanlder {
 func (p *PostHanlder) Index(w http.ResponseWriter, r *http.Request) {
 	if r.URL.Path != "/" {
 		ErrorPage(w, "Not found", 404)
+		logger.GetLogger().Info("NOTF" + r.URL.Path)
 		return
 	}
 	file := "./ui/templates/index.html"
@@ -178,8 +180,17 @@ func (p *PostHanlder) CreatePost(w http.ResponseWriter, r *http.Request) {
 			ErrorPage(w, "No cats selected", http.StatusBadRequest)
 			return
 		}
-		fmt.Println(content, cats)
 		catIds, err := p.stringsToInts(cats)
+
+		if validators.LengthRangeValidate(content, 5, 300) != nil {
+			ErrorPage(w, "Content is to short or too long", 400)
+			return
+		}
+
+		if validators.LengthRangeValidate(title, 5, 15) != nil {
+			ErrorPage(w, "Title is to short or too long", 400)
+			return
+		}
 
 		if p.Service.PostService.CreatePost(models.Post{
 			UID:     user.ID,
@@ -388,7 +399,6 @@ func (p *PostHanlder) CatFilter(w http.ResponseWriter, r *http.Request) {
 				catViews[i].Checked = true
 			}
 		}
-
 	}
 
 	data := page{
@@ -492,7 +502,6 @@ func (p *PostHanlder) Reacted(w http.ResponseWriter, r *http.Request) {
 	}
 
 	posts, err := p.Service.PostService.GetReactedPosts(user.ID)
-
 	if err != nil {
 		logger.GetLogger().Error(err.Error())
 		ErrorPage(w, "Cant fecth posts", http.StatusInternalServerError)

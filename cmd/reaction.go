@@ -1,11 +1,12 @@
 package main
 
 import (
+	"net/http"
+	"strconv"
+
 	"forum/pkg/models"
 	"forum/pkg/services"
 	"forum/pkg/utils/logger"
-	"net/http"
-	"strconv"
 )
 
 type ReactionHandler struct {
@@ -47,6 +48,7 @@ func (h *ReactionHandler) ReactPost(w http.ResponseWriter, r *http.Request) {
 
 	signint, err := strconv.Atoi(sign)
 	if err != nil {
+		logger.GetLogger().Error(err.Error())
 		ErrorPage(w, "sign convert error", http.StatusInternalServerError)
 		return
 	}

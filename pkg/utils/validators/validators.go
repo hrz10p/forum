@@ -21,7 +21,7 @@ func EmailValidate(email string) error {
 }
 
 func PasswordValidate(password string) error {
-	if len(password) < 5 {
+	if len(password) < 5 || len(password) > 20 {
 		return errors.New("password must have at least 5 characters")
 	}
 	return nil

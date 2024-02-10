@@ -2,14 +2,15 @@ package main
 
 import (
 	"fmt"
+	"html/template"
+	"net/http"
+	"time"
+
 	"forum/pkg/models"
 	"forum/pkg/services"
 	"forum/pkg/utils/cookies"
 	"forum/pkg/utils/logger"
 	"forum/pkg/utils/validators"
-	"html/template"
-	"net/http"
-	"time"
 )
 
 type ErrorMessages struct {
@@ -135,7 +136,7 @@ func (a *AuthHanlder) Registration(w http.ResponseWriter, r *http.Request) {
 		}
 
 		if validators.PasswordValidate(pass) != nil {
-			errorMessages.PasswordError = "Password must have at least 5 characters"
+			errorMessages.PasswordError = "Password must have at least 5 characters and no more than 20 characters"
 		}
 
 		if validators.EmailValidate(email) != nil {

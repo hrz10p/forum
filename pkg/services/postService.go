@@ -3,8 +3,9 @@ package services
 import (
 	"database/sql"
 	"fmt"
-	"forum/pkg/models"
 	"strconv"
+
+	"forum/pkg/models"
 )
 
 type PostService struct {
