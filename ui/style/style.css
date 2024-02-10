@@ -685,8 +685,7 @@ header {
     resize: none;
 } */
 .post-section {
-    align-items: center;
-    align-content: center;
+    
 }
 .content {
     outline: var(--yt-formatted-string-contenteditable-root-style-outline);
@@ -703,4 +702,28 @@ header {
     font-size: 16px;
     color: #ffff00;
     width: 10%;
+}
+/* Стили для кнопки "Like" (палец вверх) */
+[name="sign"][value="1"] + button {
+    /* Ваши стили для лайка, например, изображение пальца вверх */
+    background-color: #4CAF50; /* Цвет фона для лайка (зеленый в данном случае) */
+    color: white; /* Цвет текста */
+}
+
+/* Стили для кнопки "Dislike" (палец вниз) */
+[name="sign"][value="-1"] + button {
+    /* Ваши стили для дизлайка, например, изображение пальца вниз */
+    background-color: #f44336; /* Цвет фона для дизлайка (красный в данном случае) */
+    color: white; /* Цвет текста */
+}
+
+/* Используйте Unicode символы для пальцев вверх и вниз внутри кнопок */
+.likos {
+    content: "\1F44D"; /* Unicode символ пальца вверх для лайка */
+    margin-right: 5px; /* Добавьте немного отступа от текста */
+}
+
+.dis {
+    content: "\1F44E"; /* Unicode символ пальца вниз для дизлайка */
+    background-color: #f44336;
 }
