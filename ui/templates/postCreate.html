@@ -10,49 +10,47 @@
     <title>Create Post</title>
 </head>
 
-<body>
-
-    <body class="postCreate_body">
-        <header>
-            <div class="form_login">
-                <form action="/" method="get">
-                    <button class="login-button" type="submit">Home</button>
-                </form>
-            </div>
-        </header>
-        <div class="outer_creation_taller">
-            <main class="creation_taller">
-                <div class="creation_layout">
-                    <div class="creation_block">
-                        <h1>Create a Post</h1>
-                        <div class="shadow-box">
-                            <form action="/createPost" method="POST">
-                                <label for="title">Title:</label>
-                                <input type="text" id="title" name="title" maxlength="24" required>
+<body class="postCreate_body">
+    <header>
+        <div class="form_login">
+            <form action="/" method="get">
+                <button class="login-button" type="submit">Home</button>
+            </form>
+        </div>
+    </header>
+    <div class="outer_creation_taller">
+        <main class="creation_taller">
+            <div class="creation_layout">
+                <div class="creation_block">
+                    <h1>Create a Post</h1>
+                    <div class="shadow-box">
+                        <form action="/createPost" method="POST">
+                            <label for="title">Title:</label>
+                            <input type="text" id="title" name="title" maxlength="24" required>
+                            <br>
+                            <label for="content">Content:</label>
+                            <textarea id="content" name="content" maxlength="300" required></textarea>
+                            <br>
+                            <div class="filter">
+                                <label for="category">Category:</label>
                                 <br>
-                                <label for="content">Content:</label>
-                                <textarea id="content" name="content" maxlength="300" required></textarea>
-                                <br>
-                                <div class="filter">
-                                    <label for="category">Category:</label>
+                                {{range .}}
+                                <div class="choose_categoty">
+                                    <input type="checkbox" id="{{.ID}}" name="cats" value="{{.ID}}">
+                                    <label for="{{.ID}}">{{.Name}}</label>
                                     <br>
-                                    {{range .}}
-                                    <div class="choose_categoty">
-                                        <input type="checkbox" id="{{.ID}}" name="cats" value="{{.ID}}">
-                                        <label for="{{.ID}}">{{.Name}}</label>
-                                        <br>
-                                    </div>
-                                    {{end}}
                                 </div>
-                                <div class="creation_button_block">
-                                    <button class="creation_button" type="submit">Create Post</button>
-                                </div>
-                        </div>
+                                {{end}}
+                            </div>
+                            <div class="creation_button_block">
+                                <button class="creation_button" type="submit">Create Post</button>
+                            </div>
                     </div>
                 </div>
-        </div>
-        </main>
-    </body>
+            </div>
+    </div>
+    </main>
 </body>
+
 
 </html>
