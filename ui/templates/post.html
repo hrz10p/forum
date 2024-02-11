@@ -62,7 +62,7 @@
             {{range .Comments}}
             <div class="comment-container">
                 <p>Author: {{.Author}}</p>
-                <p class="p_content" >{{.Content}}</p>
+                <p class="p_content">{{.Content}}</p>
                 <div class="comment-reaction">
                     <!-- <span>&#128077; {{.LikesCount}} </span> <span> || </span><span>&#128078; {{ .DislikesCount}}</span> -->
                     <div class="reaction-section">
@@ -78,17 +78,22 @@
                             <input type="hidden" name="postID" value="{{$.Post.Id}}">
                             <input type="hidden" name="sign" value="-1">
                             <input type="hidden" name="commentID" value="{{.ID}}">
-                            <button class="dis" type="submit"> &#128078;{{ .DislikesCount}}</button>
-                        </form>
+                            <button class="dis" type="submit">
+                                &#128078;
+                                <div class="dis_count"> {{ .DislikesCount}}</div>
+                            </button>
+                            
                     </div>
+                    </form>
                 </div>
             </div>
-            {{end}}
-            {{else}}
-            {{if .Auth}}
-            <p>Be the first who will create comment</p>
-            {{end}}
-            {{end}}
+        </div>
+        {{end}}
+        {{else}}
+        {{if .Auth}}
+        <p>Be the first who will create comment</p>
+        {{end}}
+        {{end}}
         </div>
     </main>
 </body>

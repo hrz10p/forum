@@ -684,9 +684,8 @@ header {
     color: #ffff00;
     resize: none;
 } */
-.post-section {
-    
-}
+.post-section {}
+
 .comment-container {
     background-color: rgb(49.5, 52.5, 59.5);
     border-radius: 4px;
@@ -698,9 +697,11 @@ header {
     padding: 0.5%;
 
 }
+
 .reaction-section {
     display: flex;
 }
+
 .content {
     outline: var(--yt-formatted-string-contenteditable-root-style-outline);
     /* max-height: var(--yt-formatted-string-contenteditable-root-style-max-height); */
@@ -717,32 +718,36 @@ header {
     color: #ffff00;
     resize: none;
 }
+
 .p_content {
     border-radius: 4px;
     background: rgb(60, 62, 68);
     padding: 1%;
 }
-/* Стили для кнопки "Like" (палец вверх) */
-[name="sign"][value="1"] + button {
-    /* Ваши стили для лайка, например, изображение пальца вверх */
-    background-color: #4CAF50; /* Цвет фона для лайка (зеленый в данном случае) */
-    color: white; /* Цвет текста */
+
+[name="sign"][value="1"]+button {
+
+    background-color: #4CAF50;
+    color: white;
 }
 
-/* Стили для кнопки "Dislike" (палец вниз) */
-[name="sign"][value="-1"] + button {
-    /* Ваши стили для дизлайка, например, изображение пальца вниз */
-    background-color: #f44336; /* Цвет фона для дизлайка (красный в данном случае) */
-    color: white; /* Цвет текста */
+[name="sign"][value="-1"]+button {
+
+    background-color: #f44336;
+    color: white;
 }
 
-/* Используйте Unicode символы для пальцев вверх и вниз внутри кнопок */
+
 .likos {
-    content: "\1F44D"; /* Unicode символ пальца вверх для лайка */
-    margin-right: 5px; /* Добавьте немного отступа от текста */
+    content: "\1F44D";
+    /* padding-right: 5px; */
+    margin: 1%;
+    display: flex;
 }
 
 .dis {
-    content: "\1F44E"; /* Unicode символ пальца вниз для дизлайка */
+    content: "\1F44E";
     background-color: #f44336;
+    padding: 35%;
+    display: flex;
 }
