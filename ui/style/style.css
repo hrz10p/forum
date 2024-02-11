@@ -712,11 +712,16 @@ header {
     display: flex;
     justify-content: center;
 }
+.comment_for_post p {
+    display: flex;
+    justify-content: center;
+}
 #commentForm {
     display: flex;
     flex-direction: column;
 
 }
+
 .reaction-section {
     display: flex;
 }

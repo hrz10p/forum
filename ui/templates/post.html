@@ -26,22 +26,29 @@
             </div>
             <p>Categories: {{range $index, $cat := .Post.Cats}}{{if $index}}, {{end}}{{.Name}}{{end}}</p>
         </div>
-        <h4>Likes : {{.LikesCount}} || Dislikes : {{ .DislikesCount}}</h4>
-        {{if .Auth}}
+        <!-- <h4>Likes : {{.LikesCount}} || Dislikes : {{ .DislikesCount}}</h4> -->
+
         <div class="reaction-section">
             <div class="reaction-section">
                 <form action="/reactPost" method="POST">
                     <input type="hidden" name="postID" value="{{.Post.Id}}">
                     <input type="hidden" name="sign" value="1">
-                    <button type="submit">&#128077;</button>
+                    <button class="likos" type="submit">
+                        &#128077;
+                        <div class="like_count"> {{ .LikesCount}}</div>
+                    </button>
                 </form>
                 <form action="/reactPost" method="POST">
                     <input type="hidden" name="postID" value="{{.Post.Id}}">
                     <input type="hidden" name="sign" value="-1">
-                    <button type="submit">&#128078;</button>
+                    <button class="dis" type="submit">
+                        &#128078;
+                        <div class="dis_count"> {{ .DislikesCount}}</div>
+                    </button>
                 </form>
             </div>
         </div>
+        {{if .Auth}}
         {{end}}
 
         <div class="comment-section">
