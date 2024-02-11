@@ -697,7 +697,26 @@ header {
     padding: 0.5%;
 
 }
+.comment_for_post {
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    /* align-items: center; */
+    /* padding: 0% 24%; */
+    /* width: 25%; */
+    width: 50vw;
+    margin: 2vh 23vw 2vh 23vw;
+    padding: 0.5%;
+}
+.comment_for_post h2 {
+    display: flex;
+    justify-content: center;
+}
+#commentForm {
+    display: flex;
+    flex-direction: column;
 
+}
 .reaction-section {
     display: flex;
 }

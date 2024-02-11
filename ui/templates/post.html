@@ -45,17 +45,19 @@
         {{end}}
 
         <div class="comment-section">
-            <h2>Comments</h2>
             {{if .Auth}}
-            <form id="commentForm" action="/submitComment" method="POST">
-                <input type="hidden" name="postID" value="{{.Post.Id}}">
-                <!-- <textarea name="content" class="content" id="content" cols="35" rows="8" maxlength="256"></textarea> -->
-                <div name="content" id="content" class="content" aria-label="Enter comment" contenteditable="true"></div>
-                <br>
-                <!-- <button type="submit">Create Comment</button> -->
-                <button type="button" onclick="submitComment()">Create Comment</button>
-
-            </form>
+            <div class="comment_for_post">
+                <h2>Comments</h2>
+                <form id="commentForm" action="/submitComment" method="POST">
+                    <input type="hidden" name="postID" value="{{.Post.Id}}">
+                    <!-- <textarea name="content" class="content" id="content" cols="35" rows="8" maxlength="256"></textarea> -->
+                    <div name="content" id="content" class="content" aria-label="Enter comment" contenteditable="true">
+                    </div>
+                    <br>
+                    <!-- <button type="submit">Create Comment</button> -->
+                    <button type="button" onclick="submitComment()">Create Comment</button>
+                </form>
+            </div>
             <script>
                 function submitComment() {
                     var content = document.getElementById('content').innerHTML;
@@ -64,7 +66,10 @@
                 }
             </script>
             {{else}}
-            <p>You must be logged in to create comment</p>
+            <div class="comment_for_post">
+                <h2>Comments</h2>
+                <p>You must be logged in to create comment</p>
+            </div>
             {{end}}
 
             {{if .Comments}}
@@ -98,8 +103,9 @@
                     </div>
                 </div>
             </div>
+
+            {{end}}
         </div>
-        {{end}}
         {{else}}
         {{if .Auth}}
         <p>Be the first who will create comment</p>
