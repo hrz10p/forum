@@ -26,8 +26,11 @@
             </div>
             <div class="about_post">
                 <h1 class="post_title">{{.Post.Title}}</h1>
-                <span>Categories: {{range $index, $cat := .Post.Cats}}{{if $index}}, {{end}}{{.Name}}{{end}}</span>
-                <div>
+                <div class="section">
+                    <span class="text_gray">Categories: </span>
+                    <span class="category_list" > {{range $index, $cat := .Post.Cats}}{{if $index}}, {{end}}{{.Name}}{{end}}</span>
+                </div>
+                <div class="section">
                     <span>{{.Post.Content}}</span>
                 </div>
             </div>
@@ -120,9 +123,6 @@
             {{end}}
         </div>
         {{else}}
-        {{if .Auth}}
-        <p>Be the first who will create comment</p>
-        {{end}}
         {{end}}
         </div>
     </main>

@@ -701,6 +701,7 @@ header {
     border-radius: 0.5rem;
     margin: 2vh 23vw 2vh 23vw;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
+    max-height: 612px;
 }
 
 .post-section span {
@@ -717,13 +718,12 @@ header {
     flex: 3 1 0%;
     position: relative;
     padding: 0.75rem;
-    padding-top: 0.75rem;
-    padding-top: 0.75rem;
     color: rgb(255, 255, 255);
     display: flex;
     flex-direction: column;
     margin-top: 0px;
     padding-top: 0px;
+    width: calc(100% - 1.5rem - 36%) ;
 }
 
 .post_title {
@@ -734,6 +734,21 @@ header {
     flex-direction: column;
 }
 
+.section {
+    display: flex;
+    flex-direction: column;
+    -moz-box-pack: center;
+    justify-content: center;
+    padding-top: 5%;
+}
+.post_title .text_gray {
+    color: rgb(158, 158, 158);
+    font-size: 16px;
+    font-weight: 500;
+    margin: 0px;
+    padding: 0px;
+    box-sizing: inherit;
+}
 .image_card_post {
     /* display: flex;
     width: 612px;
