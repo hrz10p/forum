@@ -20,15 +20,16 @@
     </header>
     <main class="post_taller">
         <div class="post-section">
-            <h1>{{.Post.Title}}</h1>
-            
             <div class="image_card_post">
                 <img
                     src="https://media.istockphoto.com/id/1220827048/vector/anonymous-gender-neutral-face-avatar-incognito-head-silhouette.jpg?s=612x612&w=0&k=20&c=WUv9IHp5s5xY03UDkawu_xUrjmLFW0VMkwx3oAFl7QQ=">
             </div>
-            <p>Categories: {{range $index, $cat := .Post.Cats}}{{if $index}}, {{end}}{{.Name}}{{end}}</p>
-            <div>
-                <span>{{.Post.Content}}</span>
+            <div class="about_post">
+                <h1 class="post_title">{{.Post.Title}}</h1>
+                <span>Categories: {{range $index, $cat := .Post.Cats}}{{if $index}}, {{end}}{{.Name}}{{end}}</span>
+                <div>
+                    <span>{{.Post.Content}}</span>
+                </div>
             </div>
         </div>
         <!-- <h4>Likes : {{.LikesCount}} || Dislikes : {{ .DislikesCount}}</h4> -->
