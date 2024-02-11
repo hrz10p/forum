@@ -697,7 +697,7 @@ header {
     width: 50vw;
     display: flex;
     overflow: hidden;
-    background: rgb(60, 62, 68) none repeat scroll 0% 0%;
+    background: rgb(49.5, 52.5, 59.5)  none repeat scroll 0% 0%;
     border-radius: 0.5rem;
     margin: 2vh 23vw 2vh 23vw;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
@@ -739,7 +739,10 @@ header {
     flex-direction: column;
     -moz-box-pack: center;
     justify-content: center;
-    padding-top: 5%;
+    padding: 2%;
+    border-radius: 8px;
+    margin-bottom: 15%;
+    background-color: rgb(60, 62, 68);
 }
 .post_title .text_gray {
     color: rgb(158, 158, 158);
@@ -748,6 +751,7 @@ header {
     margin: 0px;
     padding: 0px;
     box-sizing: inherit;
+    background-color: rgb(60, 62, 68);
 }
 .image_card_post {
     /* display: flex;
@@ -811,6 +815,7 @@ header {
 
 .reaction-section {
     display: flex;
+    justify-content: end;
 }
 
 .content {
@@ -867,4 +872,5 @@ header {
     background-color: #f44336;
     /* padding: 35%; */
     display: flex;
+    color: white;
 }

@@ -28,35 +28,35 @@
                 <h1 class="post_title">{{.Post.Title}}</h1>
                 <div class="section">
                     <span class="text_gray">Categories: </span>
-                    <span class="category_list" > {{range $index, $cat := .Post.Cats}}{{if $index}}, {{end}}{{.Name}}{{end}}</span>
+                    <span class="category_list"> {{range $index, $cat := .Post.Cats}}{{if $index}},
+                        {{end}}{{.Name}}{{end}}</span>
                 </div>
                 <div class="section">
                     <span>{{.Post.Content}}</span>
+                </div>
+                <div class="reaction-section">
+                    <form action="/reactPost" method="POST">
+                        <input type="hidden" name="postID" value="{{.Post.Id}}">
+                        <input type="hidden" name="sign" value="1">
+                        <button class="likos" type="submit">
+                            &#128077;
+                            <div class="like_count"> {{ .LikesCount}}</div>
+                        </button>
+                    </form>
+                    <form action="/reactPost" method="POST">
+                        <input type="hidden" name="postID" value="{{.Post.Id}}">
+                        <input type="hidden" name="sign" value="-1">
+                        <button class="dis" type="submit">
+                            &#128078;
+                            <div class="dis_count"> {{ .DislikesCount}}</div>
+                        </button>
+                    </form>
                 </div>
             </div>
         </div>
         <!-- <h4>Likes : {{.LikesCount}} || Dislikes : {{ .DislikesCount}}</h4> -->
 
-        <div class="reaction-section">
-            <div class="reaction-section">
-                <form action="/reactPost" method="POST">
-                    <input type="hidden" name="postID" value="{{.Post.Id}}">
-                    <input type="hidden" name="sign" value="1">
-                    <button class="likos" type="submit">
-                        &#128077;
-                        <div class="like_count"> {{ .LikesCount}}</div>
-                    </button>
-                </form>
-                <form action="/reactPost" method="POST">
-                    <input type="hidden" name="postID" value="{{.Post.Id}}">
-                    <input type="hidden" name="sign" value="-1">
-                    <button class="dis" type="submit">
-                        &#128078;
-                        <div class="dis_count"> {{ .DislikesCount}}</div>
-                    </button>
-                </form>
-            </div>
-        </div>
+
         {{if .Auth}}
         {{end}}
 
