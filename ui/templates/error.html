@@ -1,16 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html class="error_html" lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="shortcut icon" href="/style/favicon.ico" type="image/x-icon">
+    <link rel="stylesheet" href="/style/style.css">
     <title>Error page</title>
 </head>
-<body>
 
-    <h1>{{.Code}}</h1>
-    <p>{{.Message}}</p>
-    <a href="/">Go back to the main page</a>
-    
+<body class="error_body">
+    <header>
+        <div class="form_login">
+            <form action="/" method="get">
+                <button class="login-button" type="submit">Home</button>
+            </form>
+        </div>
+    </header>
+    <main class="post_taller">
+        <div class="error-container">
+            <h1>{{.Code}}</h1>
+            <p>{{.Message}}</p>
+            <a href="/">Go back to the main page</a>
+        </div>
+    </main>
 </body>
+
 </html>

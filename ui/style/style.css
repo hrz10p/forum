@@ -24,7 +24,9 @@ header {
 .index_body .postCreate_html,
 .postCreate_body,
 .post_html,
-.post_body {
+.post_body,
+.error_html,
+.error_body {
     height: 100%;
     margin: 0;
     padding: 0;
@@ -32,7 +34,7 @@ header {
 }
 
 .postCreate_body,
-.post_body {
+.post_body, .error_body {
     background: rgb(32, 35, 41);
     font-variant-ligatures: none;
     text-rendering: optimizelegibility;
@@ -697,7 +699,7 @@ header {
     width: 50vw;
     display: flex;
     overflow: hidden;
-    background: rgb(49.5, 52.5, 59.5)  none repeat scroll 0% 0%;
+    background: rgb(49.5, 52.5, 59.5) none repeat scroll 0% 0%;
     border-radius: 0.5rem;
     margin: 2vh 23vw 2vh 23vw;
     box-shadow: rgba(0, 0, 0, 0.1) 0px 4px 6px -1px, rgba(0, 0, 0, 0.06) 0px 2px 4px -1px;
@@ -723,7 +725,7 @@ header {
     flex-direction: column;
     margin-top: 0px;
     padding-top: 0px;
-    width: calc(100% - 1.5rem - 36%) ;
+    width: calc(100% - 1.5rem - 36%);
 }
 
 .post_title {
@@ -744,6 +746,7 @@ header {
     margin-bottom: 15%;
     background-color: rgb(60, 62, 68);
 }
+
 .post_title .text_gray {
     color: rgb(158, 158, 158);
     font-size: 16px;
@@ -753,6 +756,7 @@ header {
     box-sizing: inherit;
     background-color: rgb(60, 62, 68);
 }
+
 .image_card_post {
     /* display: flex;
     width: 612px;
@@ -839,8 +843,11 @@ header {
     border-radius: 4px;
     background: rgb(60, 62, 68);
     padding: 1%;
+    color: yellow;
 }
-
+.post_content_text {
+    color: yellow;
+}
 .autor {
     font-weight: bold;
 }
@@ -873,4 +880,14 @@ header {
     /* padding: 35%; */
     display: flex;
     color: white;
+}
+.error-container {
+    background-color: rgb(49.5, 52.5, 59.5);
+    border-radius: 4px;
+    display: flex;
+    flex-direction: column;
+    border: 1px solid #948180;
+    margin: 2vh 45vw 2vh 45vw;
+    width: 6vw;
+    padding: 0.5%;
 }
