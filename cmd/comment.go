@@ -1,11 +1,12 @@
 package main
 
 import (
+	"net/http"
+	"strconv"
+
 	"forum/pkg/models"
 	"forum/pkg/services"
 	"forum/pkg/utils/validators"
-	"net/http"
-	"strconv"
 )
 
 type CommentHandler struct {
