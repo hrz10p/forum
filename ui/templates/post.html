@@ -47,13 +47,22 @@
         <div class="comment-section">
             <h2>Comments</h2>
             {{if .Auth}}
-            <form action="/submitComment" method="POST">
+            <form id="commentForm" action="/submitComment" method="POST">
                 <input type="hidden" name="postID" value="{{.Post.Id}}">
-                <textarea name="content" class="content" id="content" cols="35" rows="8" maxlength="256"></textarea>
-                <!-- <div name="content" id="content" dir="auto" class="content" aria-label="Enter comment" contenteditable="true"></div> -->
+                <!-- <textarea name="content" class="content" id="content" cols="35" rows="8" maxlength="256"></textarea> -->
+                <div name="content" id="content" class="content" aria-label="Enter comment" contenteditable="true"></div>
                 <br>
-                <button type="submit">Create Comment</button>
+                <!-- <button type="submit">Create Comment</button> -->
+                <button type="button" onclick="submitComment()">Create Comment</button>
+
             </form>
+            <script>
+                function submitComment() {
+                    var content = document.getElementById('content').innerHTML;
+                    document.getElementById('commentForm').innerHTML += '<input type="hidden" name="content" value="' + content + '">';
+                    document.getElementById('commentForm').submit();
+                }
+            </script>
             {{else}}
             <p>You must be logged in to create comment</p>
             {{end}}
@@ -61,7 +70,7 @@
             {{if .Comments}}
             {{range .Comments}}
             <div class="comment-container">
-                <p>Author: {{.Author}}</p>
+                <p class="autor"> Author: {{.Author}}</p>
                 <p class="p_content">{{.Content}}</p>
                 <div class="comment-reaction">
                     <!-- <span>&#128077; {{.LikesCount}} </span> <span> || </span><span>&#128078; {{ .DislikesCount}}</span> -->
@@ -71,8 +80,11 @@
                             <input type="hidden" name="commentID" value="{{.ID}}">
                             <input type="hidden" name="sign" value="1">
 
-                            <button class="likos" type="submit">&#128077;{{.LikesCount}}</button>
-
+                            <!-- <button class="likos" type="submit">&#128077;{{.LikesCount}}</button> -->
+                            <button class="likos" type="submit">
+                                &#128077;
+                                <div class="like_count"> {{ .LikesCount}}</div>
+                            </button>
                         </form>
                         <form action="/reactComment" method="POST">
                             <input type="hidden" name="postID" value="{{$.Post.Id}}">
@@ -82,9 +94,8 @@
                                 &#128078;
                                 <div class="dis_count"> {{ .DislikesCount}}</div>
                             </button>
-                            
+                        </form>
                     </div>
-                    </form>
                 </div>
             </div>
         </div>

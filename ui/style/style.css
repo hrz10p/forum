@@ -724,7 +724,9 @@ header {
     background: rgb(60, 62, 68);
     padding: 1%;
 }
-
+.autor {
+    font-weight: bold;
+}
 [name="sign"][value="1"]+button {
 
     background-color: #4CAF50;
@@ -741,13 +743,15 @@ header {
 .likos {
     content: "\1F44D";
     /* padding-right: 5px; */
-    margin: 1%;
+    /* margin: 1%; */
+    background-color: #f44336;
+    /* padding: 35%; */
     display: flex;
 }
 
 .dis {
     content: "\1F44E";
     background-color: #f44336;
-    padding: 35%;
+    /* padding: 35%; */
     display: flex;
 }
